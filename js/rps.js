@@ -39,7 +39,7 @@ function playRound(uChoice, cChoice){
     return winner;
 }
 
-function mainGame(totalRounds){
+function game(totalRounds){
     let userScore = 0;
     let computerScore = 0;
     for(let roundNumber = 1; roundNumber <= totalRounds; roundNumber++){
@@ -65,4 +65,12 @@ function mainGame(totalRounds){
     console.log(`Your highscore is: ${highScore}`);
 }
 
-mainGame(numberOfRounds);
+function main(){
+    game(numberOfRounds);
+    let playAgain = prompt("Do you want to play again ?(Y/N)").toLowerCase().trim();
+    if( playAgain === 'y'){
+        game();
+    }
+}
+
+main();
