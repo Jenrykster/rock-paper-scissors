@@ -3,15 +3,12 @@ let userChoice;
 let highScore = 0;
 let numberOfRounds = 5; 
 function askUserChoice(){
-    let userInput = prompt("Please choose", "Rock/Paper/Scissors").toLowerCase().trim(); //Ask user's choice
-    if(CHOICES.includes(userInput)){                                                     //then convert to lowercase
-        console.log(`User selected ${userInput} !`);                                     //then remove whitespace
-        return userInput;
+    let userInput = '';
+    while(!CHOICES.includes(userInput)){
+        console.log("Please choose between rock, paper or scissors.")
+        userInput = prompt("Please choose", "Rock/Paper/Scissors").toLowerCase().trim();
     }
-    else{
-        console.log("Please choose rock, paper or scissors.");
-        askUserChoice(); //If input a value other than "ROCK/PAPER/SCISSORS" runs the function again
-    }
+    return userInput;
 }
 
 function computerPlay(){
@@ -24,13 +21,19 @@ function playRound(uChoice, cChoice){
         uChoice = askUserChoice();
         cChoice = computerPlay();
     }
-    if(uChoice === 'rock' && cChoice === 'paper' || uChoice === 'rock' && cChoice === 'scissors' ||
+    if(uChoice === 'rock' && cChoice === 'scissors' || uChoice === 'rock' && cChoice === 'scissors' ||
         uChoice === 'paper' && cChoice === 'rock'){
         winner = "Player";
     } 
+    else if(uChoice === cChoice){
+       console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
+       console.log("It's a tie");
+       return 'tie';
+    }
     else{
         winner = "Computer";
     }
+
     console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
     console.log(`The ${winner} wins this round !`);
     return winner;
@@ -41,7 +44,18 @@ function mainGame(totalRounds){
     let computerScore = 0;
     for(let roundNumber = 1; roundNumber <= totalRounds; roundNumber++){
         let winner = playRound();
-        winner === 'Player' ? userScore++ : computerScore++;
+        if(winner === 'tie'){
+            roundNumber--;
+        }
+        if(winner === 'Player'){
+            userScore++;
+        }
+        else if(winner === 'Computer'){
+            computerScore++;
+        }
+        else{
+            continue;
+        }
     }
     if(userScore > highScore){
         highScore = userScore;
