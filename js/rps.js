@@ -9,6 +9,7 @@ function askUserChoice(){
         return userInput;
     }
     else{
+        console.log("Please choose rock, paper or scissors.");
         askUserChoice(); //If input a value other than "ROCK/PAPER/SCISSORS" runs the function again
     }
 }
@@ -42,7 +43,12 @@ function mainGame(totalRounds){
         let winner = playRound();
         winner === 'Player' ? userScore++ : computerScore++;
     }
+    if(userScore > highScore){
+        highScore = userScore;
+        console.log("You got a new highscore !");
+    }
     console.log(`Results: \n Player - ${userScore} \n Computer - ${computerScore}`)
+    console.log(`Your highscore is: ${highScore}`);
 }
 
 mainGame(numberOfRounds);
