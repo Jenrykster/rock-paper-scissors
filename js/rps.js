@@ -1,6 +1,7 @@
 const CHOICES = ['rock','paper','scissors'];
 let userChoice;
-
+let highScore = 0;
+let numberOfRounds = 5; 
 function askUserChoice(){
     let userInput = prompt("Please choose", "Rock/Paper/Scissors").toLowerCase().trim(); //Ask user's choice
     if(CHOICES.includes(userInput)){                                                     //then convert to lowercase
@@ -31,4 +32,17 @@ function playRound(uChoice, cChoice){
     }
     console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
     console.log(`The ${winner} wins this round !`);
+    return winner;
 }
+
+function mainGame(totalRounds){
+    let userScore = 0;
+    let computerScore = 0;
+    for(let roundNumber = 1; roundNumber <= totalRounds; roundNumber++){
+        let winner = playRound();
+        winner === 'Player' ? userScore++ : computerScore++;
+    }
+    console.log(`Results: \n Player - ${userScore} \n Computer - ${computerScore}`)
+}
+
+mainGame(numberOfRounds);
