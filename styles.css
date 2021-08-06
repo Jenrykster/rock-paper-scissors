@@ -2,6 +2,8 @@ body{
     border: red solid 1px;
     background-color: black;
     color:snow;
+    margin: 0%;
+    overflow: hidden;
 }
 main{
     display: flex;
@@ -9,6 +11,32 @@ main{
     justify-content: center;
     align-items: center;
     font-size: 3em;
+}
+header{
+    text-align: center;
+    font-family: monospace;
+    font-size: 1.5em;
+    border-bottom: 5px solid snow;
+}
+.choice{
+    margin:1%;
+}
+
+#computer{
+    margin-top: 50px;
+}
+#score-container{
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    width: 100%;
+    top:25%;
+}
+#score-container div{
+    text-align: center;
+}
+#score-container h4{
+    margin: 5px 10px;
 }
 #player{
     display: flex;
@@ -23,4 +51,58 @@ main{
     size: 150%;
     font-size: 3em;
     background-color: transparent;
+    transition: 0.05s ease-in-out;
+    border:none;
+}
+
+.button:hover{
+    transform: scale(1.1);
+    border: 1px solid snow;
+    border-radius: 10px;
+    box-shadow: 10px 10px snow;
+}
+
+
+@media(max-width:500px){
+    #score-container{
+        position: static;
+        top: inherit;
+        margin-top: 10%;
+    }
+    #score-container h4{
+        font-size: 0.8em;
+    }
+    .button{
+        font-size: 1.5em;
+    }
+    #computer{
+        margin-top: -50px;
+    }
+    #player{
+        position: fixed;
+        bottom:10%;
+    }
+}
+
+@media(max-width: 300px) {
+    header{
+        font-size: 1.3em;
+    }
+    #score-container h4{
+        font-size: 0.7em;
+    }
+    .button{
+        font-size: 1em;
+    }
+    
+}
+
+@media(max-height: 460px) {
+    #score-container{
+        margin:2px;
+    }
+    #score-container h4{
+        font-size: 0.6em;
+        margin: 0px;
+    }
 }
