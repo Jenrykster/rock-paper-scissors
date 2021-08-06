@@ -76,7 +76,7 @@ header{
         font-size: 1.5em;
     }
     #computer{
-        margin-top: -50px;
+        margin-top: -30px;
     }
     #player{
         position: fixed;
@@ -90,6 +90,9 @@ header{
     }
     #score-container h4{
         font-size: 0.7em;
+    }
+    #computer{
+        margin-top: 30px;
     }
     .button{
         font-size: 1em;
