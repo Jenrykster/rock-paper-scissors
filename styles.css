@@ -1,5 +1,4 @@
 body{
-    border: red solid 1px;
     background-color: black;
     color:snow;
     margin: 0%;
@@ -62,15 +61,34 @@ header{
     box-shadow: 10px 10px snow;
 }
 
+#game-over{
+    background-color: black;
+    position: absolute;
+    box-shadow: 10px 10px snow;
+    border: 1px solid snow;
+    padding: 50px;
+    text-align: center;
+    width: 80%;
+    z-index: 100;
+    border-radius: 40px;
+}
+#winner{
+    background-color: snow;
+    color: black;
+}
 
-@media(max-width:500px){
+.invisible{
+    visibility: hidden;
+}
+
+@media(max-width:550px){
     #score-container{
         position: static;
         top: inherit;
-        margin-top: 10%;
+        margin-top: 12%;
     }
     #score-container h4{
-        font-size: 0.8em;
+        font-size: 0.7em;
     }
     .button{
         font-size: 1.5em;
@@ -81,6 +99,15 @@ header{
     #player{
         position: fixed;
         bottom:10%;
+    }
+    #game-over{
+        font-size: 0.5em;
+        top:25%;
+        height: 50%;
+        width: 60%;
+    }
+    #game-over h2{
+        margin-top: 50%;
     }
 }
 
@@ -96,6 +123,13 @@ header{
     }
     .button{
         font-size: 1em;
+    }
+    #game-over{
+        font-size: 0.4em;
+    }
+    #game-over h2{
+        margin-top: 80%;
+        
     }
     
 }

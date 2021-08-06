@@ -52,6 +52,9 @@ function changeScore(pScore, cScore){
     computerScoreText.textContent = cScore;
     playerScoreText.textContent = pScore;
 }
+function showGameOver(){
+    //SHOW GAME OVER SCRREEN
+}
 function playRound(uChoice, cChoice) {
     let winner;
     if (uChoice == null) { //If the function is called without arguments then askUser for input and generate computer choice
@@ -59,7 +62,7 @@ function playRound(uChoice, cChoice) {
         cChoice = computerPlay();
     }
     if (roundNumber >= AMOUNT_OF_ROUNDS) {
-        console.log("Game ended");
+        showGameOver();
         return;
     } else {
         if (uChoice === 'rock' && cChoice === 'scissors' || uChoice === 'scissors' && cChoice === 'paper' ||
