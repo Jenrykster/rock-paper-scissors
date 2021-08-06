@@ -2,7 +2,28 @@ const CHOICES = ['rock','paper','scissors'];
 let userChoice;
 let highScore = 0;
 let numberOfRounds = 5; 
-function askUserChoice(){
+
+const buttons = document.querySelectorAll('.button');
+const computerChoiceText = document.querySelector('#computer-choice');
+const playerChoiceText = document.querySelector('#player-choice');
+
+function setEmoji(choice, target){ //Helper function to convert string to emoji
+    switch (choice) {
+        case 'rock':
+            target.textContent = '✊'
+            break;
+        case 'paper':
+            target.textContent = '🤚'
+            break;
+        case 'scissors':
+            target.textContent = '✌️'
+            break;
+        default:
+            break;
+    }
+}
+
+function askUserChoice(){ //DEPRECATED || ONLY ON CONSOLE
     let userInput = '';
     while(!CHOICES.includes(userInput)){
         console.log("Please choose between rock, paper or scissors.")
@@ -10,11 +31,16 @@ function askUserChoice(){
     }
     return userInput;
 }
-
 function computerPlay(){
-    return CHOICES[parseInt(Math.random() * 3)]; //Chooses a random index between 0-2 
+    let choice = CHOICES[parseInt(Math.random() * 3)]; //Chooses a random index between 0-2 
+    setEmoji(choice, computerChoiceText);
+    return choice;
 }
-
+function playerPlay(event){
+    let choice = event.target.id;
+    setEmoji(choice, playerChoiceText)
+    playRound(choice, computerPlay());
+}
 function playRound(uChoice, cChoice){
     let winner;
     if(uChoice == null){ //If the function is called without arguments then askUser for input and generate computer choice
@@ -73,3 +99,8 @@ function main(){
     }
 }
 
+
+buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+        playerPlay(e)});
+})
