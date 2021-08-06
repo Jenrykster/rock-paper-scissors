@@ -66,21 +66,20 @@ function playRound(uChoice, cChoice) {
             uChoice === 'paper' && cChoice === 'rock') {
             winner = "Player";
             playerScore++;
+            roundNumber++;
         }
         else if (uChoice === cChoice) {
             console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
             console.log("It's a tie");
-            roundNumber--;
             return 'tie';
         }
         else {
             winner = "Computer";
             computerScore++;
+            roundNumber++;
         }
 
         changeScore(playerScore, computerScore);
-
-        roundNumber++;
         return winner;
     }
 
