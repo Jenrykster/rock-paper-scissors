@@ -1,13 +1,20 @@
-const CHOICES = ['rock','paper','scissors'];
-let userChoice;
+const CHOICES = ['rock', 'paper', 'scissors'];
+const AMOUNT_OF_ROUNDS = 5;
+let playerChoice;
 let highScore = 0;
-let numberOfRounds = 5; 
+let roundNumber = 0;
+let playerScore = 0;
+let computerScore = 0;
 
 const buttons = document.querySelectorAll('.button');
+
 const computerChoiceText = document.querySelector('#computer-choice');
 const playerChoiceText = document.querySelector('#player-choice');
 
-function setEmoji(choice, target){ //Helper function to convert string to emoji
+const playerScoreText = document.querySelector('#score-player');
+const computerScoreText = document.querySelector('#score-computer');
+
+function setEmoji(choice, target) { //Helper function to convert string to emoji
     switch (choice) {
         case 'rock':
             target.textContent = '✊'
@@ -23,84 +30,88 @@ function setEmoji(choice, target){ //Helper function to convert string to emoji
     }
 }
 
-function askUserChoice(){ //DEPRECATED || ONLY ON CONSOLE
+function askPlayerChoice() { //DEPRECATED || ONLY ON CONSOLE
     let userInput = '';
-    while(!CHOICES.includes(userInput)){
+    while (!CHOICES.includes(userInput)) {
         console.log("Please choose between rock, paper or scissors.")
         userInput = prompt("Please choose", "Rock/Paper/Scissors").toLowerCase().trim();
     }
     return userInput;
 }
-function computerPlay(){
+function computerPlay() { //Generate computer choice
     let choice = CHOICES[parseInt(Math.random() * 3)]; //Chooses a random index between 0-2 
     setEmoji(choice, computerChoiceText);
     return choice;
 }
-function playerPlay(event){
+function playerPlay(event) {
     let choice = event.target.id;
     setEmoji(choice, playerChoiceText)
     playRound(choice, computerPlay());
 }
-function playRound(uChoice, cChoice){
+function changeScore(pScore, cScore){
+    computerScoreText.textContent = cScore;
+    playerScoreText.textContent = pScore;
+}
+function playRound(uChoice, cChoice) {
     let winner;
-    if(uChoice == null){ //If the function is called without arguments then askUser for input and generate computer choice
-        uChoice = askUserChoice();
+    if (uChoice == null) { //If the function is called without arguments then askUser for input and generate computer choice
+        uChoice = askPlayerChoice();
         cChoice = computerPlay();
     }
-    if(uChoice === 'rock' && cChoice === 'scissors' || uChoice === 'rock' && cChoice === 'scissors' ||
-        uChoice === 'paper' && cChoice === 'rock'){
-        winner = "Player";
-    } 
-    else if(uChoice === cChoice){
-       console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
-       console.log("It's a tie");
-       return 'tie';
-    }
-    else{
-        winner = "Computer";
-    }
-
-    console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
-    console.log(`The ${winner} wins this round !`);
-    return winner;
-}
-
-function game(totalRounds){
-    let userScore = 0;
-    let computerScore = 0;
-    for(let roundNumber = 1; roundNumber <= totalRounds; roundNumber++){
-        let winner = playRound();
-        if(winner === 'tie'){
+    if (roundNumber >= AMOUNT_OF_ROUNDS) {
+        console.log("Game ended");
+        return;
+    } else {
+        if (uChoice === 'rock' && cChoice === 'scissors' || uChoice === 'scissors' && cChoice === 'paper' ||
+            uChoice === 'paper' && cChoice === 'rock') {
+            winner = "Player";
+            playerScore++;
+        }
+        else if (uChoice === cChoice) {
+            console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
+            console.log("It's a tie");
             roundNumber--;
+            return 'tie';
         }
-        if(winner === 'Player'){
-            userScore++;
-        }
-        else if(winner === 'Computer'){
+        else {
+            winner = "Computer";
             computerScore++;
         }
-        else{
+
+        changeScore(playerScore, computerScore);
+
+        roundNumber++;
+        return winner;
+    }
+
+}
+function game(uChoice, cChoice, totalRounds) {
+    for (let roundNumber = 1; roundNumber <= totalRounds; roundNumber++) {
+        let winner = playRound(uChoice, cChoice);
+        if (winner === 'tie') {
+            roundNumber--;
+        }
+        if (winner === 'Player') {
+            playerScore++;
+        }
+        else if (winner === 'Computer') {
+            computerScore++;
+        }
+        else {
             continue;
         }
+
     }
-    if(userScore > highScore){
-        highScore = userScore;
+    if (playerScore > highScore) {
+        highScore = playerScore;
         console.log("You got a new highscore !");
     }
-    console.log(`Results: \n Player - ${userScore} \n Computer - ${computerScore}`)
+    console.log(`Results: \n Player - ${playerScore} \n Computer - ${computerScore}`)
     console.log(`Your highscore is: ${highScore}`);
 }
 
-function main(){
-    game(numberOfRounds);
-    let playAgain = prompt("Do you want to play again ?(Y/N)").toLowerCase().trim();
-    if( playAgain === 'y'){
-        game();
-    }
-}
-
-
 buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
-        playerPlay(e)});
+        playerPlay(e)
+    });
 })
