@@ -19,8 +19,12 @@ header{
 }
 .choice{
     margin:1%;
+    transition: all .2s ease-in-out;
 }
-
+.choice-pop{
+    transform: scale(1.1);;
+    transition: all .2s ease-in-out;
+}
 #computer{
     margin-top: 50px;
 }

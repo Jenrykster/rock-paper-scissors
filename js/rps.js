@@ -20,12 +20,15 @@ const restartButton = document.querySelector('#restart-button');
 function setEmoji(choice, target) { //Helper function to convert string to emoji
     switch (choice) {
         case 'rock':
-            target.textContent = '✊'
+            target.classList.add('choice-pop');
+            target.textContent = '✊';
             break;
         case 'paper':
+            target.classList.add('choice-pop');
             target.textContent = '🤚'
             break;
         case 'scissors':
+            target.classList.add('choice-pop');
             target.textContent = '✌️'
             break;
         default:
@@ -33,6 +36,10 @@ function setEmoji(choice, target) { //Helper function to convert string to emoji
             playerChoiceText.textContent = '...';
             break
     }
+    setTimeout(()=>{  //MAKE SURE ANIMATION RESETS
+        computerChoiceText.classList.remove('choice-pop');
+        playerChoiceText.classList.remove('choice-pop');
+    }, 300)
 }
 
 function askPlayerChoice() { //DEPRECATED || ONLY ON CONSOLE
