@@ -14,6 +14,9 @@ const playerChoiceText = document.querySelector('#player-choice');
 const playerScoreText = document.querySelector('#score-player');
 const computerScoreText = document.querySelector('#score-computer');
 
+const gameOverScreen = document.querySelector('#game-over');
+
+const restartButton = document.querySelector('#restart-button');
 function setEmoji(choice, target) { //Helper function to convert string to emoji
     switch (choice) {
         case 'rock':
@@ -26,7 +29,9 @@ function setEmoji(choice, target) { //Helper function to convert string to emoji
             target.textContent = '✌️'
             break;
         default:
-            break;
+            computerChoiceText.textContent = '...';
+            playerChoiceText.textContent = '...';
+            break
     }
 }
 
@@ -53,7 +58,18 @@ function changeScore(pScore, cScore){
     playerScoreText.textContent = pScore;
 }
 function showGameOver(){
-    //SHOW GAME OVER SCRREEN
+    let winner = playerScore > computerScore ? 'You win' : 'You lose';
+    gameOverScreen.children.namedItem('winner').textContent = winner;
+    gameOverScreen.children.namedItem('high-score').textContent = `Highscore: ${highScore}`;
+    gameOverScreen.classList.remove('invisible'); 
+}
+function restart(){
+    playerScore = 0;
+    computerScore = 0;
+    roundNumber = 0;
+    changeScore(playerScore, computerScore)
+    setEmoji();
+    gameOverScreen.classList.add('invisible');
 }
 function playRound(uChoice, cChoice) {
     let winner;
@@ -62,6 +78,7 @@ function playRound(uChoice, cChoice) {
         cChoice = computerPlay();
     }
     if (roundNumber >= AMOUNT_OF_ROUNDS) {
+        if(playerScore > highScore) highScore = playerScore;
         showGameOver();
         return;
     } else {
@@ -72,8 +89,7 @@ function playRound(uChoice, cChoice) {
             roundNumber++;
         }
         else if (uChoice === cChoice) {
-            console.log(`You choose ${uChoice} and the computer choose ${cChoice}`);
-            console.log("It's a tie");
+            changeScore('tie', 'tie');
             return 'tie';
         }
         else {
@@ -87,33 +103,11 @@ function playRound(uChoice, cChoice) {
     }
 
 }
-function game(uChoice, cChoice, totalRounds) {
-    for (let roundNumber = 1; roundNumber <= totalRounds; roundNumber++) {
-        let winner = playRound(uChoice, cChoice);
-        if (winner === 'tie') {
-            roundNumber--;
-        }
-        if (winner === 'Player') {
-            playerScore++;
-        }
-        else if (winner === 'Computer') {
-            computerScore++;
-        }
-        else {
-            continue;
-        }
-
-    }
-    if (playerScore > highScore) {
-        highScore = playerScore;
-        console.log("You got a new highscore !");
-    }
-    console.log(`Results: \n Player - ${playerScore} \n Computer - ${computerScore}`)
-    console.log(`Your highscore is: ${highScore}`);
-}
 
 buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
         playerPlay(e)
     });
 })
+
+restartButton.addEventListener('click', restart);
