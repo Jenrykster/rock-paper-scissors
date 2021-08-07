@@ -95,7 +95,17 @@ header{
 .invisible{
     visibility: hidden;
 }
-
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border: 1px snow;
+    text-align: center;
+}
+footer a{
+    color: snow;
+    font-size: 1.4em;
+}
 @media(max-width:550px){
     #score-container{
         position: static;
